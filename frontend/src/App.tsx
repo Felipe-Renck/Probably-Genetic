@@ -1,4 +1,5 @@
 import React, { Component, KeyboardEventHandler } from 'react';
+import './App.css';
 import axios from 'axios';
 import { Button } from 'semantic-ui-react';
 
@@ -31,7 +32,7 @@ export default class App extends Component<{}, State> {
   searchHPO = () => {
     const { value } = this.state;
     console.log(value);
-    axios.get('http://localhost:8000/api/disorders/').then(data => {
+    axios.post('http://localhost:8000/api/diseases/', value).then(data => {
       console.log(data.data);
     });
   };
@@ -67,18 +68,26 @@ export default class App extends Component<{}, State> {
   render() {
     const { inputValue, value } = this.state;
     return (
-      <><CreatableSelect
-        components={components}
-        inputValue={inputValue}
-        isClearable
-        isMulti
-        menuIsOpen={false}
-        onChange={this.handleChange}
-        onInputChange={this.handleInputChange}
-        onKeyDown={this.handleKeyDown}
-        placeholder="Type HPO ID's and press enter..."
-        value={value} />
-        <Button onClick={() => this.searchHPO()}>Search</Button></>
+      <div className="App">
+        <div>
+          <h1>Search Conditions by Symptoms</h1>
+          <>
+          <div className="searchInput">
+          <CreatableSelect
+            components={components}
+            inputValue={inputValue}
+            isClearable
+            isMulti
+            menuIsOpen={false}
+            onChange={this.handleChange}
+            onInputChange={this.handleInputChange}
+            onKeyDown={this.handleKeyDown}
+            placeholder="Type HPO ID's and press enter..."
+            value={value} />
+          </div>
+            <Button onClick={() => this.searchHPO()}>Search</Button></>
+        </div>
+      </div>
     );
   }
 }
