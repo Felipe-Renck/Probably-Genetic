@@ -1,10 +1,12 @@
 import React, { Component, KeyboardEventHandler } from 'react';
 import './App.css';
 import axios from 'axios';
-import { Button } from 'semantic-ui-react';
 
 import CreatableSelect from 'react-select/creatable';
 import { ActionMeta, OnChangeValue } from 'react-select';
+import { Table } from "./components/Table";
+import { Button, Container } from "@material-ui/core";
+import { Condition } from "./type";
 
 const components = {
   DropdownIndicator: null,
@@ -23,17 +25,21 @@ const createOption = (label: string) => ({
 interface State {
   readonly inputValue: string;
   readonly value: readonly Option[];
+  conditions: Condition[];
 }
 export default class App extends Component<{}, State> {
   state: State = {
     inputValue: '',
     value: [],
+    conditions: [],
   };
   searchHPO = () => {
-    const { value } = this.state;
+    const { value, conditions } = this.state;
     console.log(value);
-    axios.post('http://localhost:8000/api/diseases/', value).then(data => {
-      console.log(data.data);
+    axios.post<Condition[]>('http://localhost:8000/api/diseases/', value).then(response => {
+      console.log(response.data);
+      this.setState({ conditions: response.data });
+      console.log(conditions);
     });
   };
   handleChange = (
@@ -66,26 +72,29 @@ export default class App extends Component<{}, State> {
     }
   };
   render() {
-    const { inputValue, value } = this.state;
+    const { inputValue, value, conditions } = this.state;
     return (
       <div className="App">
         <div>
           <h1>Search Conditions by Symptoms</h1>
           <>
-          <div className="searchInput">
-          <CreatableSelect
-            components={components}
-            inputValue={inputValue}
-            isClearable
-            isMulti
-            menuIsOpen={false}
-            onChange={this.handleChange}
-            onInputChange={this.handleInputChange}
-            onKeyDown={this.handleKeyDown}
-            placeholder="Type HPO ID's and press enter..."
-            value={value} />
-          </div>
-            <Button onClick={() => this.searchHPO()}>Search</Button></>
+            <div className="searchInput">
+              <CreatableSelect
+                components={components}
+                inputValue={inputValue}
+                isClearable
+                isMulti
+                menuIsOpen={false}
+                onChange={this.handleChange}
+                onInputChange={this.handleInputChange}
+                onKeyDown={this.handleKeyDown}
+                placeholder="Type HPO ID's and press enter..."
+                value={value} />
+            </div>
+            <Button variant="contained" color="primary" onClick={() => this.searchHPO()}>Search</Button></>
+          <Container>
+            <Table data={conditions} />
+          </Container>
         </div>
       </div>
     );
