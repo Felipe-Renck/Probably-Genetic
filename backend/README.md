@@ -1,16 +1,16 @@
-# creating-a-rest-api-with-django-rest-framework
-Accompanying code for this article https://stackabuse.com/creating-a-rest-api-with-django-rest-framework/
-
+# Backend
 
 ## Instructions to run this project locally:  
   
-1. Clone repository:  
-  
-```console  
-$ git clone https://github.com/StackAbuse/creating-a-rest-api-with-django-rest-framework.git 
-```  
-  
-2. Install requirements:  
+1. Download and install PostgreSQL and pgAdmin: https://www.postgresql.org/download/
+2. Create a new database with the following properties:
+  ```text  
+        host="localhost",
+        database="dbtest",
+        user="postgres",
+        password="Novonoia1!"
+```
+3. Install requirements:  
   
 ```console  
 $ pip install -r requirements.txt  
@@ -28,6 +28,3 @@ $ python manage.py migrate
 ```console   
 $ python manage.py runserver  
 ```   
-
-Thanks for reading.
-
