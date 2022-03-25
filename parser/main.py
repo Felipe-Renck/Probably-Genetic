@@ -4,7 +4,6 @@ import psycopg2
 
 
 def persist_data(data):
-    # forming connection
     conn = psycopg2.connect(
         host="localhost",
         database="dbtest",
