@@ -1,15 +1,13 @@
-# Frontend
+# Parser
 
-## Instructions to run this project locally:  
+## Instructions to populate local PostgreSQL database:  
 
-1. Install dependencies: 
+1. Run script main.py on terminal: 
  ```console
-npm install 
+python main.py 
 ```  
-
-2. Running the app locally: 
+or
  ```console
-npm run start
+python3 main.py 
 ```  
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
